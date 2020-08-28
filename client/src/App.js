@@ -30,6 +30,9 @@ function App() {
     try {
       const res = await axios.post('http://localhost:8080/user', input);
       console.log(res.data);
+
+      const secondRes = await axios.get('http://localhost:8080/user');
+      setUsers(secondRes.data);
     } catch(e) {
       console.error(e, e.message);
     }
@@ -51,7 +54,7 @@ function App() {
           <input type="submit" />
         </form>
         {
-          users ? users.map(user => <User username={ user.username } userId={ user.id }/>) : 'Loading...'
+          users ? users.map(user => <User username={ user.username } userId={ user.id } getUsers={ grabAllUsers }/>) : 'Loading...'
         }
       </header>
     </div>

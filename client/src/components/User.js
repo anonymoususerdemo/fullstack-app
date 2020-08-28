@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-function User({ username, userId }) {
+function User({ username, userId, getUsers }) {
   async function delUser(id) {
     try {
       const res = await axios.delete('http://localhost:8080/user/' + id);
@@ -9,7 +9,9 @@ function User({ username, userId }) {
     } catch(e) {
       console.error(e);
     }
+    getUsers();
   }
+
   return (
     <div>
       <p> { JSON.stringify(username) } : { userId }</p>
