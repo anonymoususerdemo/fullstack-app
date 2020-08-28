@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
+import User from './components/User';
 
 function App() {
   const [input, setInput] = useState({ username: "", password: "" });
+  const [users, setUsers] = useState(null);
+
   async function grabAllUsers() {
     try {
       const res = await axios.get('http://localhost:8080/user');
-      console.log(res.data);
+      setUsers(res.data);
     } catch(e) {
       console.error(e, e.message);
     }
   }
+
   useEffect(() => {
     grabAllUsers();
   }, [])
@@ -46,6 +50,9 @@ function App() {
 
           <input type="submit" />
         </form>
+        {
+          users ? users.map(user => <User username={ user.username } userId={ user.id }/>) : 'Loading...'
+        }
       </header>
     </div>
   );
